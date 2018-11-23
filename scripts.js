@@ -1,6 +1,8 @@
 const form = document.querySelector("form");
 const list = document.querySelector("ul");
 const tab = document.querySelector("tbody");
+const submit = document.getElementById("submit");
+const update = document.getElementById("update");
 
 const whatInput = document.getElementById("addTodo");
 const whenInput = document.getElementById("addDate");
@@ -9,14 +11,18 @@ const todos = {};
 let counter = 0;
 
 let today = new Date();
-today = today.toDateString();
+let day = today.getDate();
+let month = today.getMonth() + 1;
+let year = today.getFullYear();
+let minDate = `${year}-${month}-${day}`;
+whenInput.setAttribute("min", minDate);
 
 
 form.addEventListener("submit", saveTodo);
 function saveTodo() {
   let id = `todo${counter}`;
   let dueDate = (new Date(whenInput.value)).toDateString();
-  let date = whenInput.value ? dueDate : today;
+  let date = whenInput.value ? dueDate : today.toDateString();
 
   todos[id] = {
     what: whatInput.value,
@@ -60,14 +66,51 @@ function drawTable() {
     tr.appendChild(edit);
     tr.appendChild(del);
     tab.appendChild(tr);
-    // update checkbox status
+
     done.addEventListener("change", completeTodo);
-    // delete todo
+    edit.addEventListener("click", editTodo);
     del.addEventListener("click", deleteTodo);
   }
   // console.log("draw", todos);
   // event.preventDefault();
 }
+
+
+
+function editTodo() {
+  const parentRow = event.srcElement.parentElement.parentElement;
+  const rowID = parentRow.firstChild.innerText;
+  console.log("edit", rowID);
+  let storedDate = new Date(todos[rowID].when);
+  let storedDay = storedDate.getDate();
+  let storedMonth = storedDate.getMonth() + 1;
+  let storedYear = storedDate.getFullYear();
+
+  whatInput.value = todos[rowID].what;
+  whenInput.value = `${storedYear}-${storedMonth}-${storedDay}`;
+  submit.classList.toggle("hide");
+  update.classList.toggle("hide");
+
+  update.addEventListener("click", () => {
+    console.log("update", rowID);
+    let dueDate = (new Date(whenInput.value)).toDateString();
+    let date = whenInput.value ? dueDate : today.toDateString();
+
+    todos[rowID] = {
+      what: whatInput.value,
+      when: date,
+      done: false
+    };
+
+    drawTable();
+    // clear form
+    whatInput.value = "";
+    whenInput.value = "";
+    submit.classList.toggle("hide");
+    update.classList.toggle("hide");
+  });
+}
+
 
 
 function completeTodo() {

@@ -5,3 +5,11 @@ form {
 tr, td {
   padding: 1em;
 }
+
+[type=submit] {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
