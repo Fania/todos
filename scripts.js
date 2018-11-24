@@ -19,6 +19,8 @@ whenInput.setAttribute("min", minDate);
 
 
 form.addEventListener("submit", saveTodo);
+
+
 function saveTodo() {
   let id = `todo${counter}`;
   let dueDate = (new Date(whenInput.value)).toDateString();
@@ -35,6 +37,8 @@ function saveTodo() {
   // clear form
   whatInput.value = "";
   whenInput.value = "";
+
+  console.log("save", id);
   event.preventDefault();
 }
 
@@ -108,7 +112,9 @@ function editTodo() {
     whenInput.value = "";
     submit.classList.toggle("hide");
     update.classList.toggle("hide");
+    event.preventDefault();
   });
+  // event.preventDefault();
 }
 
 
