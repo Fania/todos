@@ -3,13 +3,14 @@ const list = document.querySelector("ul");
 const tab = document.querySelector("tbody");
 const submit = document.getElementById("submit");
 const update = document.getElementById("update");
-
-const whatInput = document.getElementById("addTodo");
-const whenInput = document.getElementById("addDate");
+let whatInput = document.getElementById("addTodo");
+let whenInput = document.getElementById("addDate");
+let idInput = document.getElementById("todoID");
 
 const todos = {};
 let counter = 0;
 
+// block out the past by setting a min date of today
 let today = new Date();
 let day = today.getDate();
 let month = today.getMonth() + 1;
@@ -23,27 +24,29 @@ form.addEventListener("submit", saveTodo);
 
 function saveTodo() {
   let id = `todo${counter}`;
+  // set the date to today if user hasn't chosen one
   let dueDate = (new Date(whenInput.value)).toDateString();
   let date = whenInput.value ? dueDate : today.toDateString();
-
+  // store todo in object
   todos[id] = {
-    what: whatInput.value,
-    when: date,
-    done: false
+    "what": whatInput.value,
+    "when": date,
+    "done": false
   };
-
+  console.log("save", id);
   drawTable();
+  // increase unique ID counter
   counter++;
   // clear form
   whatInput.value = "";
   whenInput.value = "";
-
-  console.log("save", id);
+  // don't reload page
   event.preventDefault();
 }
 
 
 function drawTable() {
+  console.log("drawing");
   // redraw from scratch
   tab.innerHTML = "";
   // go through all todos
@@ -70,59 +73,62 @@ function drawTable() {
     tr.appendChild(edit);
     tr.appendChild(del);
     tab.appendChild(tr);
-
+    // button functionality
     done.addEventListener("change", completeTodo);
     edit.addEventListener("click", editTodo);
     del.addEventListener("click", deleteTodo);
   }
-  // console.log("draw", todos);
-  // event.preventDefault();
 }
-
 
 
 function editTodo() {
   const parentRow = event.srcElement.parentElement.parentElement;
   const rowID = parentRow.firstChild.innerText;
   console.log("edit", rowID);
+  // get the stored date from object and format
   let storedDate = new Date(todos[rowID].when);
   let storedDay = storedDate.getDate();
   let storedMonth = storedDate.getMonth() + 1;
   let storedYear = storedDate.getFullYear();
-
+  // set what and when input boxes
+  idInput.value = rowID;  // hidden
   whatInput.value = todos[rowID].what;
   whenInput.value = `${storedYear}-${storedMonth}-${storedDay}`;
+  // show/hide the correct button
   submit.classList.toggle("hide");
   update.classList.toggle("hide");
-
-  update.addEventListener("click", () => {
-    console.log("update", rowID);
-    let dueDate = (new Date(whenInput.value)).toDateString();
-    let date = whenInput.value ? dueDate : today.toDateString();
-
-    todos[rowID] = {
-      what: whatInput.value,
-      when: date,
-      done: false
-    };
-
-    drawTable();
-    // clear form
-    whatInput.value = "";
-    whenInput.value = "";
-    submit.classList.toggle("hide");
-    update.classList.toggle("hide");
-    event.preventDefault();
-  });
-  // event.preventDefault();
+  // update old todo rather than save a new todo
+  update.addEventListener("click", updateTodo);
 }
 
+
+function updateTodo() {
+  let rowID = idInput.value;
+  console.log("update", rowID);
+  let dueDate = (new Date(whenInput.value)).toDateString();
+  let date = whenInput.value ? dueDate : today.toDateString();
+  // update values of relevant todo
+  todos[rowID] = {
+    "what": whatInput.value,
+    "when": date,
+    "done": todos[rowID].done
+  };
+  drawTable();
+  // clear/reset form
+  whatInput.value = "";
+  whenInput.value = "";
+  submit.classList.toggle("hide");
+  update.classList.toggle("hide");
+  // prevent form submission (adds another new todo)
+  event.preventDefault();
+}
 
 
 function completeTodo() {
   // checkbox > td > tr
   const parentRow = event.srcElement.parentElement.parentElement;
   const rowID = parentRow.firstChild.innerText;
+  console.log("check", rowID);
   // update object and redraw table
   todos[rowID].done = !todos[rowID].done;
   drawTable();
@@ -133,6 +139,7 @@ function deleteTodo() {
   // button > td > tr
   const parentRow = event.srcElement.parentElement.parentElement;
   const rowID = parentRow.firstChild.innerText;
+  console.log("delete", rowID);
   // delete from object and redraw table
   delete todos[rowID];
   drawTable();
