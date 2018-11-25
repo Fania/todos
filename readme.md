@@ -28,6 +28,6 @@ The user can complete a todo by ticking a checkbox. This status is stored in the
 
 - [x] Deleting a todo
 - [x] Editing a todo
-- [] Reordering the list
-- [] Making it look better
+- [ ] Reordering the list
+- [ ] Making it look better
 
