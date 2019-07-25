@@ -115,7 +115,7 @@ const updateTodo = () => {
   drawTable();
   // clear/reset form
   whatInput.value = "";
-  whenInput.value = "";
+  resetDate();
   submit.classList.toggle("hide");
   update.classList.toggle("hide");
   // prevent form submission (adds another new todo)
