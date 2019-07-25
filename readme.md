@@ -1,6 +1,6 @@
 # Todo List for TECH3015
 
-This is a *very basic* todo list. 
+This is a *very basic* todo list.
 
 It does **NOT** store anything in any way, so a page refresh/reload will clear all data!
 
@@ -29,5 +29,6 @@ The user can complete a todo by ticking a checkbox. This status is stored in the
 - [x] Deleting a todo
 - [x] Editing a todo
 - [ ] Reordering the list
+- [ ] set date to today on saving new to-do
 - [ ] Making it look better
 

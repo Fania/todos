@@ -3,8 +3,6 @@
 const form = document.querySelector("form");
 const list = document.querySelector("ul");
 const tab = document.querySelector("tbody");
-const submit = document.getElementById("submit");
-const update = document.getElementById("update");
 const whatInput = document.getElementById("addTodo");
 const whenInput = document.getElementById("addDate");
 const idInput = document.getElementById("todoID");
@@ -19,6 +17,11 @@ let month = today.getMonth() + 1;
 let year = today.getFullYear();
 let minDate = `${year}-${month}-${day}`;
 whenInput.setAttribute("min", minDate);
+
+const resetDate = () => {
+  whenInput.value = today.toISOString().split('T')[0];
+}
+resetDate();
 
 const saveTodo = () => {
   let id = `todo${counter}`;
@@ -37,7 +40,7 @@ const saveTodo = () => {
   counter++;
   // clear form
   whatInput.value = "";
-  whenInput.value = "";
+  resetDate();
   // don't reload page
   event.preventDefault();
 }
