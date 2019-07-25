@@ -85,6 +85,7 @@ const editTodo = () => {
   let storedDate = new Date(todos[rowID].when);
   let storedDay = storedDate.getDate();
   let storedMonth = storedDate.getMonth() + 1;
+  if (storedMonth < 10) storedMonth = `0${storedMonth}`;
   let storedYear = storedDate.getFullYear();
   // set what and when input boxes
   idInput.value = rowID;  // hidden
