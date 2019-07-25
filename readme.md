@@ -28,7 +28,8 @@ The user can complete a todo by ticking a checkbox. This status is stored in the
 
 - [x] Deleting a todo
 - [x] Editing a todo
-- [x] reset to today on creating/editing to-dos
-- [ ] Reordering the list
-- [ ] Making it look better
+- [x] Reset to today on creating/editing to-dos
+- [x] Make it look better (a bit)
+- [ ] Use localStorge for data
+- [ ] Enable reordering the list
 

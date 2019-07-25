@@ -1,10 +1,28 @@
+body {
+  font-family: sans-serif;
+  color: #555;
+}
+
 form {
   padding: 1em;
+}
+
+input, button {
+  font-size: 1em;
+}
+
+input[type="date"] {
+  font-size: 1.2em;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+thead {
+  background: #666;
+  color: #fff;
 }
 
 tr, td {
