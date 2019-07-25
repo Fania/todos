@@ -1,11 +1,13 @@
+"use strict";
+
 const form = document.querySelector("form");
 const list = document.querySelector("ul");
 const tab = document.querySelector("tbody");
 const submit = document.getElementById("submit");
 const update = document.getElementById("update");
-let whatInput = document.getElementById("addTodo");
-let whenInput = document.getElementById("addDate");
-let idInput = document.getElementById("todoID");
+const whatInput = document.getElementById("addTodo");
+const whenInput = document.getElementById("addDate");
+const idInput = document.getElementById("todoID");
 
 const todos = {};
 let counter = 0;
@@ -18,11 +20,7 @@ let year = today.getFullYear();
 let minDate = `${year}-${month}-${day}`;
 whenInput.setAttribute("min", minDate);
 
-
-form.addEventListener("submit", saveTodo);
-
-
-function saveTodo() {
+const saveTodo = () => {
   let id = `todo${counter}`;
   // set the date to today if user hasn't chosen one
   let dueDate = (new Date(whenInput.value)).toDateString();
@@ -44,8 +42,7 @@ function saveTodo() {
   event.preventDefault();
 }
 
-
-function drawTable() {
+const drawTable = () => {
   console.log("drawing");
   // redraw from scratch
   tab.innerHTML = "";
@@ -80,8 +77,7 @@ function drawTable() {
   }
 }
 
-
-function editTodo() {
+const editTodo = () => {
   const parentRow = event.srcElement.parentElement.parentElement;
   const rowID = parentRow.firstChild.innerText;
   console.log("edit", rowID);
@@ -101,8 +97,7 @@ function editTodo() {
   update.addEventListener("click", updateTodo);
 }
 
-
-function updateTodo() {
+const updateTodo = () => {
   let rowID = idInput.value;
   console.log("update", rowID);
   let dueDate = (new Date(whenInput.value)).toDateString();
@@ -123,8 +118,7 @@ function updateTodo() {
   event.preventDefault();
 }
 
-
-function completeTodo() {
+const completeTodo = () => {
   // checkbox > td > tr
   const parentRow = event.srcElement.parentElement.parentElement;
   const rowID = parentRow.firstChild.innerText;
@@ -134,8 +128,7 @@ function completeTodo() {
   drawTable();
 }
 
-
-function deleteTodo() {
+const deleteTodo = () => {
   // button > td > tr
   const parentRow = event.srcElement.parentElement.parentElement;
   const rowID = parentRow.firstChild.innerText;
@@ -145,3 +138,4 @@ function deleteTodo() {
   drawTable();
 }
 
+form.addEventListener("submit", saveTodo);

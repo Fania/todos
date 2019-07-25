@@ -4,10 +4,12 @@ form {
 
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 tr, td {
   padding: 1em;
+  border: 1px solid gray;
 }
 
 [type=submit] {
