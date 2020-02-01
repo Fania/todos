@@ -1,4 +1,4 @@
-# Todo List for TECH3015
+# Todo List exercise
 
 This is a *very basic* todo list.
 
